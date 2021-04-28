@@ -18,7 +18,7 @@ public class Model {
 		podao = new PowerOutageDAO();
 		sommaCustomers = 0;
 		sommaOre = 0;
-		sommaAnni = 0;
+		sommaAnni = 1;
 	}
 	
 	public List<Nerc> getNercList() {
@@ -39,41 +39,40 @@ public class Model {
 			
 		if(sommaCustomers > calcolaTotaleCustomers(soluzioneMigliore) || soluzioneMigliore == null) {
 			soluzioneMigliore = new ArrayList<Event>(parziale);
-			return;
+		}
+				
+		
+		for(Event e : partenza) {
+			if(soluzioneAmmisibile(e, parziale, oreMax, anniMax)) {
+				parziale.add(e);
+				cerca(parziale, livello+1, oreMax, anniMax);
+				parziale.remove(e);
+			}	
 		}
 		
-		else {		
-		
-			for(Event e : partenza) {
-				if(soluzioneAmmisibile(e, parziale, oreMax, anniMax)) {
-					parziale.add(e);
-					cerca(parziale, livello+1, oreMax, anniMax);
-					parziale.remove(e);
-				}	
-			}
-		}
 	}
 
 	private boolean soluzioneAmmisibile(Event e, List<Event> parziale, int oreMax, int anniMax) {
 		
+		
+				
 		if(parziale.size() == 0) { 
 			return true;
 		}
 	
-		if(parziale.get(parziale.size()-1).getEventBegin().getYear() != e.getEventBegin().getYear()) {
-			sommaAnni++;
-		}
+		sommaAnni = e.getEventBegin().getYear() - parziale.get(0).getEventBegin().getYear();
+		
 			
 		for(Event ee : parziale) {
-			sommaOre += ee.getDurata();
+			sommaOre += ee.getDurata() + e.getDurata();
 		}
 			
 		if(sommaAnni > anniMax || sommaOre > oreMax) {
 			return false;
 		}
 		
-		
 		return true;
+		
 	
 	}
 
