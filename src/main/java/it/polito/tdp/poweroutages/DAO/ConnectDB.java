@@ -14,6 +14,7 @@ import com.zaxxer.hikari.HikariDataSource;
  * Uses the HikariCP library for managing a connection pool
  * @see <a href="https://brettwooldridge.github.io/HikariCP/">HikariCP</a>
  */
+
 public class ConnectDB {
 	
 	private static final String jdbcURL = "jdbc:mysql://localhost/poweroutages";

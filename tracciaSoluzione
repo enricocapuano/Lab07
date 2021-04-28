@@ -1,0 +1,18 @@
+Livello ricorsione: numero di eventi inseriti
+
+Soluzione parziale: sottoinsieme di eventi non ancora completo con n_ore < Y e e n_anni < X 
+
+Soluzione completa: sottoinsieme di eventi non ancora completo con n_ore <= Y e e n_anni <= X, tale che qualsiasi altro
+					evento rimanente nella base dati, se aggiunto al sottoinsieme, violerebbe uno dei due vincoli
+					
+					
+Condizioni di terminazione:
+					
+					- n_anni = X
+					- n_ore = Y
+				 	
+				 	
+Strutture dati:
+					- List<Eventi>
+					- Livello
+					- int somma clienti
