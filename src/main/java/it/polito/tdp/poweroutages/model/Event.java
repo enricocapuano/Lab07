@@ -3,6 +3,7 @@ package it.polito.tdp.poweroutages.model;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset; //converte in secondi una data in base ad un fusorario
+import java.time.temporal.ChronoUnit;
 
 
 public class Event {
@@ -17,7 +18,7 @@ public class Event {
 	private int customersAffected;
 	private LocalDateTime eventBegin;
 	private LocalDateTime eventFinish;
-	int durata;
+	long durata;
 	
 	public Event(int poId, int eventTypeId, int tagId, int areaId, int nercId, int responsibleId, int customersAffected,
 			LocalDateTime eventBegin, LocalDateTime eventFinish) {
@@ -31,6 +32,8 @@ public class Event {
 		this.customersAffected = customersAffected;
 		this.eventBegin = eventBegin;
 		this.eventFinish = eventFinish;
+		LocalDateTime temp = LocalDateTime.from(eventBegin);
+		this.durata = temp.until(eventFinish, ChronoUnit.HOURS);
 	}
 
 	public int getPoId() {
@@ -107,14 +110,10 @@ public class Event {
 
 	@Override
 	public String toString() {
-		return poId+" "+eventTypeId+" "+customersAffected+" "+eventBegin+" "+eventFinish;
+		return eventBegin.getYear()+" "+eventBegin+" "+eventFinish+" "+durata+" "+customersAffected;
 	}
 	
-	public int getDurata() {
-		long f = this.eventFinish.toEpochSecond(ZoneOffset.UTC);
-		long b = this.eventBegin.toEpochSecond(ZoneOffset.UTC);
-		int diff = (int) (f - b);
-		durata = diff/3600;
+	public long getDurata() {
 		return durata;
 	}
 
