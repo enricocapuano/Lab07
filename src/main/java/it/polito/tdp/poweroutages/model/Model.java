@@ -11,7 +11,6 @@ public class Model {
 	List<Event> partenza;
 	private List<Event> soluzioneMigliore;
 	private int sommaCustomers;
-	private int sommaOre;
 	private int totaleOre;
 	
 	public Model() {
